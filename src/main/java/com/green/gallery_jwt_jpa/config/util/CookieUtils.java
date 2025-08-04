@@ -1,5 +1,4 @@
 package com.green.gallery_jwt_jpa.config.util;
-
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +44,7 @@ public class CookieUtils {
         return null;
     }
 
-    public void deleteCookie(HttpServletResponse response, String name) {
-        setCookie(response, name, null, 0, null);
+    public void deleteCookie(HttpServletResponse response, String name, String path) {
+        setCookie(response, name, null, 0, path);
     }
 }

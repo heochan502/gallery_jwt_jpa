@@ -1,6 +1,6 @@
 constants:
   file:
-    directory: D:\ParkDoheum\2025\2025-04-msa\backend\upload
+    directory: D:\hc\backend\upload
   jwt:
     issuer: green502@green.com #??? ??
     bearer-format: JWT
@@ -37,4 +37,4 @@ mybatis:
   mapper-locations: mappers/**/*.xml
 
 server:
-  port: 8989
+  port: 8080

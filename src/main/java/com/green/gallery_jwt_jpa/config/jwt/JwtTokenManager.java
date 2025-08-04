@@ -1,5 +1,4 @@
 package com.green.gallery_jwt_jpa.config.jwt;
-
 import com.green.gallery_jwt_jpa.config.constants.ConstJwt;
 import com.green.gallery_jwt_jpa.config.model.JwtUser;
 import com.green.gallery_jwt_jpa.config.model.UserPrincipal;
@@ -36,7 +35,7 @@ public class JwtTokenManager {
 
     public void setAccessTokenInCookie(HttpServletResponse response, String accessToken) {
         cookieUtils.setCookie(response, constJwt.getAccessTokenCookieName(), accessToken
-                            , constJwt.getAccessTokenCookieValiditySeconds(), constJwt.getAccessTokenCookiePath());
+                , constJwt.getAccessTokenCookieValiditySeconds(), constJwt.getAccessTokenCookiePath());
     }
 
     public String getAccessTokenFromCookie(HttpServletRequest request) {
@@ -44,7 +43,7 @@ public class JwtTokenManager {
     }
 
     public void deleteAccessTokenInCookie(HttpServletResponse response) {
-        cookieUtils.deleteCookie(response, constJwt.getAccessTokenCookieName());
+        cookieUtils.deleteCookie(response, constJwt.getAccessTokenCookieName(), constJwt.getAccessTokenCookiePath());
     }
 
     public String generateRefreshToken(JwtUser jwtUser) {
@@ -60,7 +59,7 @@ public class JwtTokenManager {
     }
 
     public void deleteRefreshTokenInCookie(HttpServletResponse response) {
-        cookieUtils.deleteCookie(response, constJwt.getRefreshTokenCookieName());
+        cookieUtils.deleteCookie(response, constJwt.getRefreshTokenCookieName(), constJwt.getRefreshTokenCookiePath());
     }
 
     public String getRefreshTokenFromCookie(HttpServletRequest request) {
@@ -94,6 +93,7 @@ public class JwtTokenManager {
         String accessToken = getAccessTokenFromCookie(request);
         if(accessToken == null){ return null; }
         JwtUser jwtUser = getJwtUserFromToken(accessToken);
+        if(jwtUser == null){ return null; }
         UserPrincipal userPrincipal = new UserPrincipal(jwtUser.getSignedUserId(), jwtUser.getRoles());
         return new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
     }
