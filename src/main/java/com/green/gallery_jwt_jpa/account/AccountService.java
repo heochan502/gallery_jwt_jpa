@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,7 +23,7 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final AccountRepository accountRepository;
 
-//    public int join(AccountJoinReq req) {
+    //    public int join(AccountJoinReq req) {
     public void join(AccountJoinReq req) {
         String hashedPw = BCrypt.hashpw(req.getLoginPw(), BCrypt.gensalt());
         //암호화가 된 비밀번호를 갖는 AccountJoinReq 객체를 만들어주세요. (아이디, 이름 갖고 있고)
@@ -33,7 +34,6 @@ public class AccountService {
         members.setLoginId(req.getLoginId());
         members.setLoginPw(hashedPw);
         members.setName(req.getName());
-
 
 
 //        MembersRolesIds membersRolesIds = new MembersRolesIds();
@@ -53,26 +53,42 @@ public class AccountService {
         accountRepository.save(members);
 
         // return accountMapper.save(changedReq);
-    //        return 1;
+        //        return 1;
 
     }
 
     public AccountLoginRes login(AccountLoginReq req) {
-        AccountLoginRes res = accountMapper.findByLoginId(req);
+//        AccountLoginRes res = accountMapper.findByLoginId(req);
+        Members members = accountRepository.findByLoginId(req.getLoginId());
 
         //아이디가 없거나 비밀번호가 다르다면
-        if(res == null || !BCrypt.checkpw(req.getLoginPw(), res.getLoginPw())) {
+//        if(res == null || !BCrypt.checkpw(req.getLoginPw(), res.getLoginPw())) {
+//            return null; //return null; 처리
+//        }
+        if (members == null || !BCrypt.checkpw(req.getLoginPw(), members.getLoginPw())) {
             return null; //return null; 처리
         }
         //로그인 성공!!! 로그인 한 사용자의 role가져오기~
         //호출해주세요
-        List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
-        JwtUser jwtuser = new JwtUser(res.getId(), roles);
-        res.setJwtUser(jwtuser);
+        List<String> roles = members.getRoles().stream().map(item -> item.getMembersRolesIds()
+                .getRoleName()
+        ).collect(Collectors.toList());
+        log.info("roles: {}", roles);
+        JwtUser jwtuser = new JwtUser(members.getId(), roles);
+
+        AccountLoginRes accountLoginRes = new AccountLoginRes();
+        accountLoginRes.setJwtUser(jwtuser);
+        accountLoginRes.setMemberId(members.getId());
 
 
+//        List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
+//        JwtUser jwtuser = new JwtUser(res.getId(), roles);
+//        res.setJwtUser(jwtuser);
 
-        return res;
+
+        return accountLoginRes;
+//        return res;
     }
+
 
 }

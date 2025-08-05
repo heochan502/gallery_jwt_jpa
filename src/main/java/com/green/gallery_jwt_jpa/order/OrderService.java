@@ -22,7 +22,7 @@ public class OrderService {
     private final CartMapper cartMapper;
 
     @Transactional
-    public int saveOrder(OrderPostReq req, int logginedMemberId) {
+    public int saveOrder(OrderPostReq req, long logginedMemberId) {
         //상품 정보 DB로 부터 가져온다.
         List<ItemGetRes> itemList = itemMapper.findAllByIdIn(req.getItemIds());
 
@@ -52,7 +52,7 @@ public class OrderService {
         return 1;
     }
 
-    public List<OrderGetRes> findAllByMemberId(int memberId) {
+    public List<OrderGetRes> findAllByMemberId(long memberId) {
         return orderMapper.findAllByMemberIdOrderByIdDesc(memberId);
     }
 

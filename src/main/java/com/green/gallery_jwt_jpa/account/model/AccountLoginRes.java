@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 public class AccountLoginRes {
-    private int id;
-    @JsonIgnore
-    private String loginPw;
+    private long memberId;
+//    @JsonIgnore
+//    private String loginPw;
     @JsonIgnore
     private JwtUser jwtUser;
 }

@@ -23,8 +23,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> add(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody OrderPostReq req) {
-//        int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+//        long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         log.info("req: {}", req);
         int result = orderService.saveOrder(req, logginedMemberId);
         return ResponseEntity.ok(result);
@@ -33,16 +33,16 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<?> findAllByMemberIdOrderByIdDesc(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-//        int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+//        long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         List<OrderGetRes> result = orderService.findAllByMemberId(logginedMemberId);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{orderId}")
     public ResponseEntity<?> findDetail(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable int orderId) {
-//        int logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        int logginedMemberId = userPrincipal.getMemberId();
+//        long logginedMemberId = (int) HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+        long logginedMemberId = userPrincipal.getMemberId();
         OrderDetailGetReq req = new OrderDetailGetReq();
         req.setOrderId(orderId);
         req.setMemberId(logginedMemberId);

@@ -7,5 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CartDeleteReq {
     private int cartId;
-    private int memberId;
+    private long memberId;
 }

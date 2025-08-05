@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 @Getter
 public class UserPrincipal implements UserDetails {
-    private final int memberId;
+    private final long memberId;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(int memberId, List<String> roles) {
+    public UserPrincipal(long memberId, List<String> roles) {
         this.memberId = memberId;
         List<SimpleGrantedAuthority> list = new ArrayList<>();
         for(String role : roles){
