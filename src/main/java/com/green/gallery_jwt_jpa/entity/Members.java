@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity // 모든 entity는 pk값을 가져야한다
@@ -24,5 +27,17 @@ public class Members extends Created {
 
     @Column(nullable = false, length = 100)
     private String loginPw;
+
+
+    @OneToMany(mappedBy = "members", cascade = CascadeType.ALL)
+    private List<MembersRoles> roles = new ArrayList<>(); // 양방향 회원 가입하면 roles 까지 입력됨
+
+    public void addRole(String roleName) {
+        MembersRolesIds membersRolesIds = new MembersRolesIds(roleName);
+        MembersRoles memberRoles = new MembersRoles();
+        memberRoles.setMembers(this);
+        memberRoles.setMembersRolesIds(membersRolesIds);
+        this.roles.add(memberRoles);
+    }
 }
 

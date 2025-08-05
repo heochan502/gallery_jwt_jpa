@@ -5,11 +5,14 @@ import com.green.gallery_jwt_jpa.account.model.AccountLoginReq;
 import com.green.gallery_jwt_jpa.account.model.AccountLoginRes;
 import com.green.gallery_jwt_jpa.config.model.JwtUser;
 import com.green.gallery_jwt_jpa.entity.Members;
+import com.green.gallery_jwt_jpa.entity.MembersRoles;
+import com.green.gallery_jwt_jpa.entity.MembersRolesIds;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -30,6 +33,22 @@ public class AccountService {
         members.setLoginPw(hashedPw);
         members.setName(req.getName());
 
+
+
+//        MembersRolesIds membersRolesIds = new MembersRolesIds();
+//        membersRolesIds.setRoleName("ROLE_USER_1");
+//
+//        MembersRoles membersRoles = new MembersRoles();
+//        membersRoles.setMembersRolesIds(membersRolesIds);
+//        membersRoles.setMembers(members);
+//
+//        List<MembersRoles> membersRolesList = new ArrayList<>();
+//        membersRolesList.add(membersRoles);//
+//        members.setRoles(membersRolesList);
+
+
+        members.addRole("ROLE_USER_1");
+
         accountRepository.save(members);
 
         // return accountMapper.save(changedReq);
@@ -49,6 +68,9 @@ public class AccountService {
         List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
         JwtUser jwtuser = new JwtUser(res.getId(), roles);
         res.setJwtUser(jwtuser);
+
+
+
         return res;
     }
 
