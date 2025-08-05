@@ -11,3 +11,11 @@ INSERT INTO `members` (`id`, `name`, `login_id`, `login_pw`, `created`) VALUES
                                                                             (1, '홍길동동', 'mic', '$2a$10$BrDg3bw5.Id7N1Uj1lR9VeiQyVFbuKMjrX5Sqo6p4whRRgih8yVRy', '2025-08-01 13:02:54'),
                                                                             (2, '우디아', 'udea', '$2a$10$K/1amQN4/SResFu84V9tVuO7c17voICz.RyGIoi/mqj9qMhKZzUHm', '2025-08-01 13:03:29'),
                                                                             (3, '텀즈', 'tums', '$2a$10$qL1wBWixo6RhMmm8giV6f.kKpVYFQG99Y6IEt8yLY5D2LlWUfpgNS', '2025-08-01 14:46:47');
+
+INSERT INTO `members_roles` (`members_id`, `role_name`) VALUES
+                                                            (1, 'ROLE_USER_1'),
+                                                            (2, 'ROLE_USER_2'),
+                                                            (3, 'ROLE_USER_1'),
+                                                            (3, 'ROLE_USER_2');
+
+

@@ -22,10 +22,22 @@ public class ItemService {
 
     public int save(MultipartFile img, ItemPostReq req) {
         String savedFileName = myFileUtils.makeRandomFileName(img); //저장할 파일명
-        req.setImgPath(savedFileName);
-        int result = itemMapper.save(req);
+//        req.setImgPath(savedFileName);
 
-        String directoryPath = String.format("/item/%d", req.getId());
+
+        Items item = new Items();
+        item.setImgPath(savedFileName);
+        item.setName(req.getName());
+        item.setPrice(req.getPrice());
+        item.setDiscountPer(req.getDiscountPer());
+
+        itemRepository.save(item);
+
+
+
+//        int result = itemMapper.save(req);
+
+        String directoryPath = String.format("/item/%d", item.getId());
         myFileUtils.makeFolders(directoryPath);
 
         String savedPathFileName = directoryPath + "/" + savedFileName;
