@@ -30,8 +30,10 @@ public class AccountController {
             return ResponseEntity.badRequest().build(); //state: 400
         }
 
-        int result = accountService.join(req);
-        return ResponseEntity.ok(result); //state: 200
+//        int result = accountService.join(req);
+        accountService.join(req);
+        return ResponseEntity.ok(1); //stat
+        // e: 200
     }
 
     @PostMapping("/login")
