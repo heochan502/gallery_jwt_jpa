@@ -1,40 +1,48 @@
 constants:
   file:
     directory: D:\hc\backend\upload
+
   jwt:
-    issuer: green502@green.com #??? ??
-    bearer-format: JWT
+    issuer :  green502@green.com #??? ??
+
+    bearer-token: JWT
 
     claim-key: signedUser
-    secret-key: DaeguGreenArtAcademyClass502MsaClassFightingkkkkkk
-
+    secret-key: DeaguGreenArtAcademyClass502MsaClassFightingkkkkkk
     access-token-cookie-name: access-token
     access-token-cookie-path: / #?? ???? ??? ???
-    access-token-cookie-validity-seconds: 900 # 15? (s) 60 * 15
-    access-token-validity-milliseconds: 900_000 # 15? (ms) 60 * 15 * 1000
+    access-token-cookie-validity-seconds: 900 # 15?(s) 60 * 15
 
+    access-token-validity-milliseconds: 900_000 #15? (ms) 60 * 15 *1000
     refresh-token-cookie-name: refresh-token
-    refresh-token-cookie-path: /api/v1/account/reissue #?? ??? ?? ??? ???
+    refresh-token-cookie-path: /api/v1/account/reissue #?? ???? ??? ???
     refresh-token-cookie-validity-seconds: 1_296_000 # 15? (s) 60 * 60 * 24 * 15
     refresh-token-validity-milliseconds: 1_296_000_000 # 15? (ms) 60 * 60 * 24 * 15 * 1000
-
 
 spring:
   application:
     name: gallery
   datasource:
-    url: jdbc:log4jdbc:mariadb://localhost/gallery
+    url: jdbc:log4jdbc:mariadb://localhost/gallery_jpa
     username: root
     password: green502
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create #프로젝트 실행시마다 테이블을 모두 drop 후 create한다.
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 20
+        format_sql: true #쿼리문 로그를 찍어줄 때 보기편하게 포맷팅
+        order_updates: true
   servlet:
     multipart:
       max-file-size: 15MB
 
 mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
 
-server:
-  port: 8080
+  configuration:
+    map-underscore-to-camel-case: true
