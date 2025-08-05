@@ -20,5 +20,4 @@ public class MembersRolesIds implements Serializable {
     private Long memberId;
     @Column( length = 20)
     private Long roleName;
-
 }
